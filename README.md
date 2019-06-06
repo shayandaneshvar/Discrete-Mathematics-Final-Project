@@ -18,12 +18,11 @@ T = Number of the place which is Going to be Robbed<br>
 Next M Lines:
 <br><br>
 U,V : two numbers in each line which indicates that place U is connected To place V <br>
-.
-.
-.
-<br>
+.<br>
+.<br>
+.<br>
 ## Sample Input and Output
-<br><pre>
+<pre>
 Inputs:
         2 1 2
         3 3 1 2
