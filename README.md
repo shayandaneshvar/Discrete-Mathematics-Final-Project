@@ -1,6 +1,7 @@
 # Discrete-Mathematics-Final-Project
 
 Final Project For Discrete Mathematics - Robin Hood Problem
+
 <div dir="ltr" align="Left">
        
 ## Inputs and Output
@@ -14,28 +15,32 @@ M = Number of Relations Available between Places in each Island<br>
 S = Number of the place With aeroplanes in each Island <br>
 T = Number of the place which is Going to be Robbed<br>
 <br>
-next M Lines:
+Next M Lines:
 <br><br>
-U,V : two numbers in each line which indicates that place U is connected To place V 
+U,V : two numbers in each line which indicates that place U is connected To place V <br>
 .
 .
 .
 <br>
 ## Sample Input and Output
 <br><pre>
-Input:
-       2 1 2
-       3 3 1 2
-       1 2
-       2 3 
-       3 1
-       4 5 3 4
-       1 2
-       1 3
-       2 3
-       2 4
-       3 4
+Inputs:
+        2 1 2
+        3 3 1 2
+        1 2
+        2 3 
+        3 1
+        4 5 3 4
+        1 2
+        1 3
+        2 3
+        2 4
+        3 4
 Output:
-        4
+         4
         </pre>
 </div>
+
+## Collaborators
+<a href="https://github.com/soloraid">Hashem Pourallahverdi</a><br>
+<a href="https://github.com/shayandaneshvar">S.Shayan Daneshvar</a><br>
