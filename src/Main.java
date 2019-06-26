@@ -103,18 +103,17 @@ public class Main extends Application {
                                       Queue<Node> curNodes, AtomicInteger depth) {
         if (curNodes.peek().getNumber() == -1) {
             depth.getAndIncrement();
-            curNodes.poll();
-//            curNodes.add(new Node(-1, NodeType.NORMAL));
-        }
-        curNodes.poll();
-
-        for (Pair<Node, Node> link : links) {
-            if (link.getValue().getNumber() != curNode.getNumber()) {
-                curNodes.add(link.getValue());
-            } else {
-                curNodes.add(link.getKey());
+            curNodes.add(new Node(-1, NodeType.NORMAL));
+        } else {
+            for (Pair<Node, Node> link : links) {
+                if (link.getValue().getNumber() != curNode.getNumber()) {
+                    curNodes.add(link.getValue());
+                } else {
+                    curNodes.add(link.getKey());
+                }
             }
         }
+        curNodes.poll();
         return curNodes.peek();
     }
 
