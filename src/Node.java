@@ -5,6 +5,14 @@ public class Node {
     private boolean isVisited;
     private NodeType nodeType;
 
+    public boolean isVisited() {
+        return isVisited;
+    }
+
+    public NodeType getNodeType() {
+        return nodeType;
+    }
+
     public int getNumber() {
         return number;
     }

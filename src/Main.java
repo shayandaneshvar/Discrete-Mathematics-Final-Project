@@ -59,10 +59,20 @@ public class Main extends Application {
                         node2).collect(Collectors.toList()).get(0)));
                 ;
             }
-            islands.add(new Island(nodes, links));
+            islands.add(new Island(nodes, links, i + 1));
         }
-
-
+        int cost = 0;
+        Island initIsland = islands.stream().filter(x -> x.getNumber() ==
+                initialIsland).collect(Collectors.toList()).get(0);
+        islands.remove(initIsland);
+        cost += handleIsland(initIsland.getNodes(), initIsland.getLinks(),
+                initIsland.getNodes().stream().filter(x -> x.getNumber() ==
+                        initialNode).collect(Collectors.toList()).get(0));
+        for (Island island : islands) {
+            cost += handleIsland(island.getNodes(), island.getLinks(),
+                    island.getAirport());
+        }
+        System.out.println(cost);
 //        launch(args);
     }
 
