@@ -65,12 +65,11 @@ public class Main extends Application {
         Island initIsland = islands.stream().filter(x -> x.getNumber() ==
                 initialIsland).collect(Collectors.toList()).get(0);
         islands.remove(initIsland);
-        cost += handleIsland(initIsland.getNodes(), initIsland.getLinks(),
+        cost += handleIsland(initIsland,
                 initIsland.getNodes().stream().filter(x -> x.getNumber() ==
                         initialNode).collect(Collectors.toList()).get(0));
         for (Island island : islands) {
-            cost += handleIsland(island.getNodes(), island.getLinks(),
-                    island.getAirport());
+            cost += handleIsland(island,island.getAirport());
         }
         System.out.println(cost);
 //        launch(args);
