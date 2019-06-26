@@ -3,6 +3,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 /*
     K = Number of Islands
@@ -40,9 +41,9 @@ public class Main extends Application {
             List<Node> nodes = new ArrayList<>();
             List<Pair<Node, Node>> links = new ArrayList<>();
             for (int j = 0; j < numberOfPlaces; j++) {
-                if (j == airplane) {
+                if (j + 1 == airplane) {
                     nodes.add(new Node(j + 1, NodeType.AIRPORT));
-                } else if (j == cafe) {
+                } else if (j + 1 == cafe) {
                     nodes.add(new Node(j + 1, NodeType.CAFE));
                 } else {
                     nodes.add(new Node(j + 1, NodeType.NORMAL));
@@ -82,7 +83,7 @@ public class Main extends Application {
 
 
     private static int bfs(Island island, Node start, Node end) {
-        Integer depth = 0;
+        AtomicInteger depth = new AtomicInteger(0);
         Node curNode = start;
         Queue<Node> curNodes = new LinkedList<>();
         curNodes.add(curNode);
@@ -94,25 +95,25 @@ public class Main extends Application {
                             getNumber() == temp).collect(Collectors.toList())
                     , curNodes, depth);
         }
-        return depth;
+        return depth.get();
     }
 
     private static Node goToNextNodes(Node curNode,
-                                      List<Pair<Node,Node>> links,
-                                      Queue<Node> curNodes, Integer depth) {
-        if(curNodes.peek().getNumber() == -1) {
-            depth++;
+                                      List<Pair<Node, Node>> links,
+                                      Queue<Node> curNodes, AtomicInteger depth) {
+        if (curNodes.peek().getNumber() == -1) {
+            depth.getAndIncrement();
             curNodes.poll();
+//            curNodes.add(new Node(-1, NodeType.NORMAL));
         }
         curNodes.poll();
 
-        for (Pair<Node,Node> link:links) {
-            if(link.getValue().getNumber() != curNode.getNumber()) {
+        for (Pair<Node, Node> link : links) {
+            if (link.getValue().getNumber() != curNode.getNumber()) {
                 curNodes.add(link.getValue());
             } else {
                 curNodes.add(link.getKey());
             }
-
         }
         return curNodes.peek();
     }
