@@ -97,6 +97,24 @@ public class Main extends Application {
         return depth;
     }
 
+    private static Node goToNextNodes(Node curNode,
+                                      List<Pair<Node,Node>> links,
+                                      Queue<Node> curNodes, Integer depth) {
+        if(curNodes.peek().getNumber() == -1) {
+            depth++;
+        }
+        curNodes.poll();
+        for (Pair<Node,Node> link:links) {
+            if(link.getValue().getNumber() != curNode.getNumber()) {
+                curNodes.add(link.getValue());
+            } else {
+                curNodes.add(link.getKey());
+            }
+
+        }
+        return curNodes.peek();
+    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
