@@ -75,6 +75,19 @@ public class Main extends Application {
 //        launch(args);
     }
 
+    private static int handleIsland(Island island, Node startPalce) {
+        int pathLength = 0;
+        pathLength += dijkstra(startPalce,island.getCafe());
+        pathLength += dijkstra(island.getCafe(),island.getAirport());
+        return pathLength;
+    }
+
+    private static int dijkstra(Node start, Node end) {
+
+        return 0;
+    }
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         //todo
