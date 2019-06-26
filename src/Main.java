@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 /*
     K = Number of Islands
     F = First Position in the N(th) place
@@ -52,9 +53,11 @@ public class Main extends Application {
             for (int j = 0; j < numOfRelations; j++) {
                 int node1 = scanner.nextInt();
                 int node2 = scanner.nextInt();
-                links.add(new Pair<Node, Node>(nodes.stream().anyMatch(x ->
-                        x.getNumber() == node1), (nodes.stream().anyMatch(x ->
-                        x.getNumber() == node2))));
+                links.add(new Pair<Node, Node>(nodes.stream().filter(x -> x.
+                        getNumber() == node1).collect(Collectors.toList()).
+                        get(0), nodes.stream().filter(x -> x.getNumber() ==
+                        node2).collect(Collectors.toList()).get(0)));
+                ;
             }
             islands.add(new Island(nodes, links));
         }
