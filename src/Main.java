@@ -73,9 +73,9 @@ public class Main extends Application {
 //        launch(args);
     }
 
-    private static int handleIsland(Island island, Node startPalce) {
+    private static int handleIsland(Island island, Node startPlace) {
         int pathLength = 0;
-        pathLength += bfs(island, startPalce, island.getCafe());
+        pathLength += bfs(island, startPlace, island.getCafe());
         pathLength += bfs(island, island.getCafe(), island.getAirport());
         return pathLength;
     }
@@ -102,8 +102,10 @@ public class Main extends Application {
                                       Queue<Node> curNodes, Integer depth) {
         if(curNodes.peek().getNumber() == -1) {
             depth++;
+            curNodes.poll();
         }
         curNodes.poll();
+
         for (Pair<Node,Node> link:links) {
             if(link.getValue().getNumber() != curNode.getNumber()) {
                 curNodes.add(link.getValue());
