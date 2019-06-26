@@ -25,12 +25,39 @@ Next M Lines:
  */
 
 public class Main extends Application {
+    private static int initialNode;
+    private static int initialIsland;
+    private static List<Island> islands = new ArrayList<>();
+    private static int cost = 0;
+
     public static void main(String[] args) {
-        // K,F,J
-        int numberOfIslands, initialNode, initialIsland;
         Scanner scanner = new Scanner(System.in);
-        List<Island> islands = new ArrayList<>();
-        numberOfIslands = scanner.nextInt();
+        initialize(scanner);
+        Island initIsland = islands.stream().filter(x -> x.getNumber() ==
+                initialIsland).collect(Collectors.toList()).get(0);
+        islands.remove(initIsland);
+        cost += handleIsland(initIsland,
+                initIsland.getNodes().stream().filter(x -> x.getNumber() ==
+                        initialNode).collect(Collectors.toList()).get(0));
+        if (islands.size() == 0) {
+            cost -= bfs(initIsland, initIsland.getCafe(),
+                    initIsland.getAirport());
+        }
+        if (islands.size() > 0) {
+            cost += bfs(islands.get(0), islands.get(0).getAirport(),
+                    islands.get(0).getCafe());
+            islands.remove(0);
+        }
+        for (Island island : islands) {
+            cost += handleIsland(island, island.getAirport());
+        }
+        System.out.println(cost);
+//        launch(args);
+    }
+
+    private static void initialize(Scanner scanner) {
+
+        int numberOfIslands = scanner.nextInt();
         initialNode = scanner.nextInt();
         initialIsland = scanner.nextInt();
         for (int i = 0; i < numberOfIslands; i++) {
@@ -53,33 +80,12 @@ public class Main extends Application {
                 int node1 = scanner.nextInt();
                 int node2 = scanner.nextInt();
                 links.add(new Pair<>(nodes.stream().filter(x -> x.
-                        getNumber() == node1).collect(Collectors.toList()).
-                        get(0), nodes.stream().filter(x -> x.getNumber() ==
-                        node2).collect(Collectors.toList()).get(0)));
+                    getNumber() == node1).collect(Collectors.toList()).
+                    get(0), nodes.stream().filter(x -> x.getNumber() ==
+                    node2).collect(Collectors.toList()).get(0)));
             }
             islands.add(new Island(nodes, links, i + 1));
         }
-        int cost = 0;
-        Island initIsland = islands.stream().filter(x -> x.getNumber() ==
-                initialIsland).collect(Collectors.toList()).get(0);
-        islands.remove(initIsland);
-        cost += handleIsland(initIsland,
-                initIsland.getNodes().stream().filter(x -> x.getNumber() ==
-                        initialNode).collect(Collectors.toList()).get(0));
-        if (islands.size() == 0) {
-            cost -= bfs(initIsland, initIsland.getCafe(),
-                    initIsland.getAirport());
-        }
-        if (islands.size() > 0) {
-            cost += bfs(islands.get(0), islands.get(0).getAirport(),
-                    islands.get(0).getCafe());
-            islands.remove(0);
-        }
-        for (Island island : islands) {
-            cost += handleIsland(island, island.getAirport());
-        }
-        System.out.println(cost);
-//        launch(args);
     }
 
     private static int handleIsland(Island island, Node startPlace) {
