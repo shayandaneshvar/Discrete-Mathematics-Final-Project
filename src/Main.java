@@ -1,6 +1,9 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 /*
     K = Number of Islands
@@ -23,11 +26,38 @@ Next M Lines:
 
 public class Main extends Application {
     public static void main(String[] args) {
+        // K,F,J
         int numberOfIslands, initialNode, initialIsland;
         Scanner scanner = new Scanner(System.in);
+        List<Island> islands = new ArrayList<>();
         numberOfIslands = scanner.nextInt();
         initialNode = scanner.nextInt();
         initialIsland = scanner.nextInt();
+        for (int i = 0; i < numberOfIslands; i++) {
+            int numberOfPlaces = scanner.nextInt();
+            int numOfRelations = scanner.nextInt();
+            int airplane = scanner.nextInt();
+            int cafe = scanner.nextInt();
+            List<Node> nodes = new ArrayList<>();
+            List<Pair<Node, Node>> links = new ArrayList<>();
+            for (int j = 0; j < numberOfPlaces; j++) {
+                if (j == airplane) {
+                    nodes.add(new Node(j + 1, NodeType.AIRPORT));
+                } else if (j == cafe) {
+                    nodes.add(new Node(j + 1, NodeType.CAFE));
+                } else {
+                    nodes.add(new Node(j + 1, NodeType.NORMAL));
+                }
+            }
+            for (int j = 0; j < numOfRelations; j++) {
+                int node1 = scanner.nextInt();
+                int node2 = scanner.nextInt();
+                links.add(new Pair<Node, Node>(nodes.stream().anyMatch(x ->
+                        x.getNumber() == node1), (nodes.stream().anyMatch(x ->
+                        x.getNumber() == node2))));
+            }
+            islands.add(new Island(nodes, links));
+        }
 
 
 //        launch(args);
