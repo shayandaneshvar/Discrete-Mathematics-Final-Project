@@ -56,7 +56,6 @@ public class Main extends Application {
                         getNumber() == node1).collect(Collectors.toList()).
                         get(0), nodes.stream().filter(x -> x.getNumber() ==
                         node2).collect(Collectors.toList()).get(0)));
-                ;
             }
             islands.add(new Island(nodes, links, i + 1));
         }
@@ -67,6 +66,15 @@ public class Main extends Application {
         cost += handleIsland(initIsland,
                 initIsland.getNodes().stream().filter(x -> x.getNumber() ==
                         initialNode).collect(Collectors.toList()).get(0));
+        if (islands.size() == 0) {
+            cost -= bfs(initIsland, initIsland.getCafe(),
+                    initIsland.getAirport());
+        }
+        if (islands.size() > 0) {
+            cost += bfs(islands.get(0), islands.get(0).getAirport(),
+                    islands.get(0).getCafe());
+            islands.remove(0);
+        }
         for (Island island : islands) {
             cost += handleIsland(island, island.getAirport());
         }
@@ -116,7 +124,6 @@ public class Main extends Application {
         curNodes.poll();
         return curNodes.peek();
     }
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
