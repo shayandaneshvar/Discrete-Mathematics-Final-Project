@@ -77,12 +77,12 @@ public class Main extends Application {
 
     private static int handleIsland(Island island, Node startPalce) {
         int pathLength = 0;
-        pathLength += dijkstra(startPalce,island.getCafe());
-        pathLength += dijkstra(island.getCafe(),island.getAirport());
+        pathLength += dijkstra(island,startPalce,island.getCafe());
+        pathLength += dijkstra(island,island.getCafe(),island.getAirport());
         return pathLength;
     }
 
-    private static int dijkstra(Node start, Node end) {
+    private static int dijkstra(Island island, Node start, Node end) {
 
         return 0;
     }
