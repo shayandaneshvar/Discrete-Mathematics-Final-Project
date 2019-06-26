@@ -2,9 +2,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 /*
     K = Number of Islands
@@ -53,7 +51,7 @@ public class Main extends Application {
             for (int j = 0; j < numOfRelations; j++) {
                 int node1 = scanner.nextInt();
                 int node2 = scanner.nextInt();
-                links.add(new Pair<Node, Node>(nodes.stream().filter(x -> x.
+                links.add(new Pair<>(nodes.stream().filter(x -> x.
                         getNumber() == node1).collect(Collectors.toList()).
                         get(0), nodes.stream().filter(x -> x.getNumber() ==
                         node2).collect(Collectors.toList()).get(0)));
@@ -69,7 +67,7 @@ public class Main extends Application {
                 initIsland.getNodes().stream().filter(x -> x.getNumber() ==
                         initialNode).collect(Collectors.toList()).get(0));
         for (Island island : islands) {
-            cost += handleIsland(island,island.getAirport());
+            cost += handleIsland(island, island.getAirport());
         }
         System.out.println(cost);
 //        launch(args);
@@ -77,14 +75,26 @@ public class Main extends Application {
 
     private static int handleIsland(Island island, Node startPalce) {
         int pathLength = 0;
-        pathLength += dijkstra(island,startPalce,island.getCafe());
-        pathLength += dijkstra(island,island.getCafe(),island.getAirport());
+        pathLength += bfs(island, startPalce, island.getCafe());
+        pathLength += bfs(island, island.getCafe(), island.getAirport());
         return pathLength;
     }
 
-    private static int dijkstra(Island island, Node start, Node end) {
 
-        return 0;
+    private static int bfs(Island island, Node start, Node end) {
+        Integer depth = 0;
+        Node curNode = start;
+        Queue<Node> curNodes = new LinkedList<>();
+        curNodes.add(curNode);
+        curNodes.add(new Node(-1, NodeType.NORMAL));
+        while (curNode.getNumber() != end.getNumber()) {
+            int temp = curNode.getNumber();
+            curNode = goToNextNodes(curNode, island.getLinks().stream().filter(
+                    x -> x.getKey().getNumber() == temp || x.getValue().
+                            getNumber() == temp).collect(Collectors.toList())
+                    , curNodes, depth);
+        }
+        return depth;
     }
 
 
