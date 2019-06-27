@@ -31,8 +31,8 @@ public class Main extends Application {
     private static int cost = 0;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        initialize(scanner);
+
+        initialize();
         Island initIsland = islands.stream().filter(x -> x.getNumber() ==
                 initialIsland).collect(Collectors.toList()).get(0);
         islands.remove(initIsland);
@@ -55,8 +55,8 @@ public class Main extends Application {
 //        launch(args);
     }
 
-    private static void initialize(Scanner scanner) {
-
+    private static void initialize() {
+        Scanner scanner = new Scanner(System.in);
         int numberOfIslands = scanner.nextInt();
         initialNode = scanner.nextInt();
         initialIsland = scanner.nextInt();
@@ -80,9 +80,9 @@ public class Main extends Application {
                 int node1 = scanner.nextInt();
                 int node2 = scanner.nextInt();
                 links.add(new Pair<>(nodes.stream().filter(x -> x.
-                    getNumber() == node1).collect(Collectors.toList()).
-                    get(0), nodes.stream().filter(x -> x.getNumber() ==
-                    node2).collect(Collectors.toList()).get(0)));
+                        getNumber() == node1).collect(Collectors.toList()).
+                        get(0), nodes.stream().filter(x -> x.getNumber() ==
+                        node2).collect(Collectors.toList()).get(0)));
             }
             islands.add(new Island(nodes, links, i + 1));
         }
