@@ -1,4 +1,6 @@
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -29,10 +31,12 @@ public class Main extends Application {
     private static int initialIsland;
     private static List<Island> islands = new ArrayList<>();
     private static int cost = 0;
+    private static Group root;
+    private static ArrayList<Island> copy = new ArrayList<>();
 
     public static void main(String[] args) {
-
         initialize();
+        islands.stream().forEach(x -> copy.add(x));
         Island initIsland = islands.stream().filter(x -> x.getNumber() ==
                 initialIsland).collect(Collectors.toList()).get(0);
         islands.remove(initIsland);
@@ -52,7 +56,7 @@ public class Main extends Application {
             cost += handleIsland(island, island.getAirport());
         }
         System.out.println(cost);
-//        launch(args);
+        launch(args);
     }
 
     private static void initialize() {
@@ -95,7 +99,6 @@ public class Main extends Application {
         return pathLength;
     }
 
-
     private static int bfs(Island island, Node start, Node end) {
         AtomicInteger depth = new AtomicInteger(0);
         Node curNode = start;
@@ -133,6 +136,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //todo
+        root = new Group();
+        Scene scene = new Scene(root, 800, 800);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        primaryStage.setTitle("DM Project");
+        Graphics.draw(copy.get(0), root);
+        AtomicInteger i = new AtomicInteger(0);
+        scene.setOnKeyPressed(event ->
+        {
+            if (i.get() + 1 < copy.size()) {
+                root.getChildren().clear();
+                i.getAndIncrement();
+                Graphics.draw(copy.get(i.get()), root);
+            } else {
+                i.set(-1);
+            }
+        });
     }
 }
