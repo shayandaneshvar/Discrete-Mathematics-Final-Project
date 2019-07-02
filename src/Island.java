@@ -1,9 +1,10 @@
 import javafx.util.Pair;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Island {
+public class Island implements Comparable<Island> {
     private List<Node> nodes;
     private List<Pair<Node, Node>> links;
     private int number;
@@ -35,5 +36,18 @@ public class Island {
 
     public List<Pair<Node, Node>> getLinks() {
         return links;
+    }
+
+    @Override
+    public int compareTo(Island o) {
+        if(Main.bfs(this,this.getAirport(),this.getCafe())>Main.bfs(o,
+            o.getAirport(),o.getCafe())){
+            return 1;
+        }else if(Main.bfs(this,this.getAirport(),this.getCafe()) < Main.bfs(o,
+            o.getAirport(),o.getCafe())) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

@@ -47,6 +47,8 @@ public class Main extends Application {
             cost -= bfs(initIsland, initIsland.getCafe(),
                     initIsland.getAirport());
         }
+        Collections.sort(islands);
+        Collections.reverse(islands);
         if (islands.size() > 0) {
             cost += bfs(islands.get(0), islands.get(0).getAirport(),
                     islands.get(0).getCafe());
@@ -99,7 +101,7 @@ public class Main extends Application {
         return pathLength;
     }
 
-    private static int bfs(Island island, Node start, Node end) {
+    public static int bfs(Island island, Node start, Node end) {
         AtomicInteger depth = new AtomicInteger(0);
         Node curNode = start;
         Queue<Node> curNodes = new LinkedList<>();
